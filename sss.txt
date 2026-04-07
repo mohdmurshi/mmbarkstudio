@@ -1,0 +1,1126 @@
+# MMBARKSTUDIO Portfolio — Next.js + TypeScript + Tailwind CSS
+
+Below is a complete starter codebase for a **Sam Kolder style** portfolio, adapted for **MMBARKSTUDIO / Murshid**.
+
+---
+
+## 1) Folder Structure
+
+```txt
+app/
+  about/
+    [slug]/
+      page.tsx
+  contact/
+    page.tsx
+  work/
+    page.tsx
+  globals.css
+  layout.tsx
+  page.tsx
+components/
+  common/
+    Container.tsx
+    SectionHeading.tsx
+  home/
+    HeroSection.tsx
+    LogoStrip.tsx
+    PortfolioGrid.tsx
+    StatsCtaSection.tsx
+  layout/
+    Footer.tsx
+    Navbar.tsx
+  ui/
+    VideoLightbox.tsx
+lib/
+  data.ts
+  utils.ts
+public/
+  videos/
+    hero-reel.mp4
+    showreel-preview.mp4
+    stats-loop.mp4
+    works/
+      work-1.mp4
+      work-1-hover.mp4
+      work-1-poster.jpg
+      work-2.mp4
+      work-2-hover.mp4
+      work-2-poster.jpg
+      work-3.mp4
+      work-3-hover.mp4
+      work-3-poster.jpg
+      work-4.mp4
+      work-4-hover.mp4
+      work-4-poster.jpg
+      work-5.mp4
+      work-5-hover.mp4
+      work-5-poster.jpg
+      work-6.mp4
+      work-6-hover.mp4
+      work-6-poster.jpg
+```
+
+---
+
+## 2) Install Needed Packages
+
+```bash
+npm install lucide-react clsx tailwind-merge
+```
+
+---
+
+## 3) `lib/utils.ts`
+
+```ts
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+---
+
+## 4) `lib/data.ts`
+
+```ts
+export type WorkItem = {
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  description: string;
+  client?: string;
+  heroVideo: string;
+  hoverVideo: string;
+  poster: string;
+  youtubeEmbed?: string;
+  featured?: boolean;
+};
+
+export const siteConfig = {
+  brand: "MMBARK",
+  studioName: "MMBARKSTUDIO",
+  personName: "Murshid",
+  location: "Kerala, India",
+  email: "mmbarkstudio@gmail.com",
+  whatsapp: "https://wa.me/919999999999",
+  instagram: "https://instagram.com/mmbarkstudio",
+  youtube: "https://youtube.com/@mmbarkstudio",
+  title:
+    "A Kerala-based filmmaker and editor redefining the digital frame—where local soul meets a global rhythm.",
+  heroIntro:
+    "Murshid is a Kerala-based filmmaker and editor crafting cinematic visuals, brand stories, and modern digital experiences through MMBARKSTUDIO.",
+  address: ["Kerala, India"],
+  stats: [
+    { label: "Subscribers", value: "50K+" },
+    { label: "Followers", value: "120K+" },
+    { label: "Views", value: "5M+" },
+  ],
+  partners: ["Canon", "YouTube", "DJI", "Brands", "Creators"],
+  services: [
+    "Cinematic Filmmaking & Production",
+    "AI-Powered Brand Advertisements",
+    "Professional Post-Production & Editing",
+  ],
+};
+
+export const works: WorkItem[] = [
+  {
+    slug: "cinematic-filmmaking-production",
+    title: "Cinematic Filmmaking & Production",
+    category: "Signature Service",
+    date: "2025",
+    client: "MMBARKSTUDIO",
+    description:
+      "A complete visual storytelling experience from concept to final cut with cinematic composition, precision lighting, art direction, and polished color grading.",
+    heroVideo: "/videos/works/work-1.mp4",
+    hoverVideo: "/videos/works/work-1-hover.mp4",
+    poster: "/videos/works/work-1-poster.jpg",
+    youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    featured: true,
+  },
+  {
+    slug: "ai-powered-brand-advertisements",
+    title: "AI-Powered Brand Advertisements",
+    category: "Brand Ads",
+    date: "2025",
+    client: "Brand Campaign",
+    description:
+      "Futuristic commercial content using AI-driven visuals, bold concepts, hyper-real environments, and high-impact creative direction for standout brand communication.",
+    heroVideo: "/videos/works/work-2.mp4",
+    hoverVideo: "/videos/works/work-2-hover.mp4",
+    poster: "/videos/works/work-2-poster.jpg",
+    youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    featured: true,
+  },
+  {
+    slug: "post-production-editing",
+    title: "Professional Post-Production & Editing",
+    category: "Editing",
+    date: "2025",
+    client: "Post Suite",
+    description:
+      "Raw footage transformed into a high-energy final film using rhythm, seamless transitions, sound design, pacing, and narrative clarity.",
+    heroVideo: "/videos/works/work-3.mp4",
+    hoverVideo: "/videos/works/work-3-hover.mp4",
+    poster: "/videos/works/work-3-poster.jpg",
+    youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  },
+  {
+    slug: "fashion-reel",
+    title: "Fashion Reel",
+    category: "Commercial",
+    date: "2024",
+    client: "Fashion Brand",
+    description:
+      "A sleek visual piece built for premium branding and digital-first storytelling.",
+    heroVideo: "/videos/works/work-4.mp4",
+    hoverVideo: "/videos/works/work-4-hover.mp4",
+    poster: "/videos/works/work-4-poster.jpg",
+    youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  },
+  {
+    slug: "travel-film",
+    title: "Travel Film",
+    category: "Lifestyle",
+    date: "2024",
+    client: "Tourism",
+    description:
+      "A mood-heavy travel visual built with motion, atmosphere, and cinematic color work.",
+    heroVideo: "/videos/works/work-5.mp4",
+    hoverVideo: "/videos/works/work-5-hover.mp4",
+    poster: "/videos/works/work-5-poster.jpg",
+    youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  },
+  {
+    slug: "event-film",
+    title: "Event Film",
+    category: "Live Coverage",
+    date: "2024",
+    client: "Event Client",
+    description:
+      "Fast-cut and emotional event storytelling designed for social and long-form use.",
+    heroVideo: "/videos/works/work-6.mp4",
+    hoverVideo: "/videos/works/work-6-hover.mp4",
+    poster: "/videos/works/work-6-poster.jpg",
+    youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  },
+];
+```
+
+---
+
+## 5) `app/layout.tsx`
+
+```tsx
+import type { Metadata } from "next";
+import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
+const headingFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
+
+const monoFont = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+});
+
+export const metadata: Metadata = {
+  title: "MMBARKSTUDIO | Murshid",
+  description: "A Kerala-based filmmaker and editor redefining the digital frame.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className="dark">
+      <body className={`${headingFont.variable} ${monoFont.variable} bg-black text-white antialiased`}>
+        <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(100,180,255,0.12),transparent_25%),linear-gradient(to_bottom,#070707,#0a0a0a_40%,#111_100%)]">
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </div>
+      </body>
+    </html>
+  );
+}
+```
+
+---
+
+## 6) `app/globals.css`
+
+```css
+@import "tailwindcss";
+
+:root {
+  --background: #090909;
+  --foreground: #f5f5f5;
+  --muted: #b7b7b7;
+  --line: rgba(255, 255, 255, 0.1);
+  --card: rgba(255, 255, 255, 0.04);
+  --accent: #9bdcff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.02), transparent 25%),
+    repeating-linear-gradient(
+      to right,
+      rgba(255,255,255,0.015) 0,
+      rgba(255,255,255,0.015) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    #090909;
+  color: var(--foreground);
+  font-family: var(--font-mono), monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.section-line {
+  border-color: var(--line);
+}
+
+.video-shadow {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.hover-lift {
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  border-color: rgba(155, 220, 255, 0.4);
+}
+```
+
+---
+
+## 7) `components/common/Container.tsx`
+
+```tsx
+import { cn } from "@/lib/utils";
+
+export default function Container({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={cn("mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10", className)}>{children}</div>;
+}
+```
+
+---
+
+## 8) `components/common/SectionHeading.tsx`
+
+```tsx
+export default function SectionHeading({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+}) {
+  return (
+    <div className="space-y-4">
+      {eyebrow ? <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">{eyebrow}</p> : null}
+      <h2 className="max-w-3xl text-3xl font-medium tracking-tight text-white sm:text-5xl">{title}</h2>
+      {description ? <p className="max-w-2xl text-sm leading-7 text-zinc-300 sm:text-base">{description}</p> : null}
+    </div>
+  );
+}
+```
+
+---
+
+## 9) `components/layout/Navbar.tsx`
+
+```tsx
+"use client";
+
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import Container from "@/components/common/Container";
+import { siteConfig } from "@/lib/data";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/work", label: "Work" },
+  { href: "/contact", label: "Contact" },
+];
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
+      <Container className="flex h-20 items-center justify-between">
+        <Link href="/" className="font-heading text-3xl font-semibold tracking-tight text-white">
+          <span className="italic">{siteConfig.brand}</span>
+        </Link>
+
+        <nav className="hidden items-center gap-8 md:flex">
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-xs uppercase tracking-[0.2em] text-zinc-200 transition hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <Link
+          href="/contact"
+          className="hidden rounded-xl border border-white/10 bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-black transition hover:scale-[1.03] md:inline-flex"
+        >
+          Contact
+        </Link>
+
+        <button
+          onClick={() => setOpen((prev) => !prev)}
+          className="inline-flex rounded-lg border border-white/10 bg-white/5 p-2 text-white md:hidden"
+          aria-label="Open menu"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </Container>
+
+      {open ? (
+        <div className="border-t border-white/10 bg-black/95 md:hidden">
+          <Container className="flex flex-col gap-4 py-5">
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm uppercase tracking-[0.2em] text-zinc-200"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </Container>
+        </div>
+      ) : null}
+    </header>
+  );
+}
+```
+
+---
+
+## 10) `components/layout/Footer.tsx`
+
+```tsx
+import Link from "next/link";
+import { Instagram, Mail, Youtube } from "lucide-react";
+import Container from "@/components/common/Container";
+import { siteConfig } from "@/lib/data";
+
+export default function Footer() {
+  return (
+    <footer className="mt-24 border-t border-white/5 bg-zinc-950/80">
+      <Container className="space-y-10 py-14">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="space-y-4">
+            <div className="text-3xl font-semibold italic">{siteConfig.brand}</div>
+            <div className="flex flex-col gap-3 text-sm text-zinc-300 sm:flex-row sm:items-center sm:gap-6">
+              <div className="inline-flex items-center gap-2"><Mail size={15} /> {siteConfig.email}</div>
+              <div>{siteConfig.location}</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 text-xs uppercase tracking-[0.22em] text-zinc-300">
+            <Link href="/">Home</Link>
+            <Link href="/work">Work</Link>
+            <Link href="/contact">Contact</Link>
+          </div>
+        </div>
+
+        <div className="glass-card grid gap-8 rounded-3xl p-6 sm:p-8 lg:grid-cols-3 lg:items-center">
+          <div className="text-sm text-zinc-300">Copyright © 2025 {siteConfig.personName}.</div>
+          <div className="text-center text-xs uppercase tracking-[0.2em] text-zinc-300">Privacy</div>
+          <div className="flex items-center justify-start gap-4 lg:justify-end">
+            <a href={siteConfig.instagram} target="_blank" className="rounded-full border border-white/10 p-2"><Instagram size={18} /></a>
+            <a href={siteConfig.youtube} target="_blank" className="rounded-full border border-white/10 p-2"><Youtube size={18} /></a>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 text-xs text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>Powered by MMBARKSTUDIO.</p>
+          <p>{siteConfig.title}</p>
+        </div>
+      </Container>
+    </footer>
+  );
+}
+```
+
+---
+
+## 11) `components/ui/VideoLightbox.tsx`
+
+```tsx
+"use client";
+
+import { X } from "lucide-react";
+import { useEffect } from "react";
+
+export default function VideoLightbox({
+  open,
+  onClose,
+  youtubeEmbed,
+}: {
+  open: boolean;
+  onClose: () => void;
+  youtubeEmbed: string;
+}) {
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/95 px-4 py-10">
+      <div className="mx-auto flex h-full max-w-6xl flex-col">
+        <div className="mb-4 flex justify-end">
+          <button
+            onClick={onClose}
+            className="inline-flex rounded-full border border-white/15 bg-white/5 p-3 text-white"
+          >
+            <X size={22} />
+          </button>
+        </div>
+
+        <div className="relative flex-1 overflow-hidden rounded-3xl border border-white/10 bg-black">
+          <iframe
+            src={youtubeEmbed}
+            title="Featured video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="h-full w-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## 12) `components/home/HeroSection.tsx`
+
+```tsx
+"use client";
+
+import { Play, MapPin, Mail } from "lucide-react";
+import { useState } from "react";
+import Container from "@/components/common/Container";
+import VideoLightbox from "@/components/ui/VideoLightbox";
+import { siteConfig } from "@/lib/data";
+
+export default function HeroSection() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <section className="relative overflow-hidden py-16 sm:py-24 lg:py-28">
+        <Container className="space-y-10">
+          <div className="max-w-5xl space-y-8">
+            <h1 className="text-4xl font-medium leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">
+              {siteConfig.personName} is a filmmaker and editor building cinematic stories from {siteConfig.location}.
+            </h1>
+
+            <div className="flex flex-col gap-4 text-sm text-zinc-300 sm:flex-row sm:items-center sm:gap-8">
+              <span className="inline-flex items-center gap-2"><MapPin size={15} /> {siteConfig.location}</span>
+              <span className="inline-flex items-center gap-2"><Mail size={15} /> {siteConfig.email}</span>
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black video-shadow">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="aspect-[16/9] w-full object-cover opacity-85"
+              poster="/videos/works/work-1-poster.jpg"
+            >
+              <source src="/videos/hero-reel.mp4" type="video/mp4" />
+            </video>
+
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+              <button
+                onClick={() => setOpen(true)}
+                className="group flex h-28 w-28 items-center justify-center rounded-full border border-white/20 bg-sky-200/80 text-black shadow-2xl transition hover:scale-105"
+              >
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border border-black/10">
+                  <Play className="ml-1" size={26} fill="currentColor" />
+                </div>
+              </button>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <VideoLightbox
+        open={open}
+        onClose={() => setOpen(false)}
+        youtubeEmbed="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+      />
+    </>
+  );
+}
+```
+
+---
+
+## 13) `components/home/LogoStrip.tsx`
+
+```tsx
+import Container from "@/components/common/Container";
+import { siteConfig } from "@/lib/data";
+
+export default function LogoStrip() {
+  return (
+    <section className="py-10 sm:py-16">
+      <Container>
+        <div className="grid grid-cols-2 gap-5 border-y border-white/5 py-8 text-center sm:grid-cols-3 lg:grid-cols-5">
+          {siteConfig.partners.map((partner) => (
+            <div key={partner} className="text-lg font-semibold tracking-wide text-zinc-100 sm:text-xl">
+              {partner}
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+```
+
+---
+
+## 14) `components/home/PortfolioGrid.tsx`
+
+```tsx
+"use client";
+
+import Link from "next/link";
+import { useRef } from "react";
+import Container from "@/components/common/Container";
+import SectionHeading from "@/components/common/SectionHeading";
+import { works } from "@/lib/data";
+
+function WorkCard({
+  title,
+  category,
+  date,
+  slug,
+  poster,
+  hoverVideo,
+}: {
+  title: string;
+  category: string;
+  date: string;
+  slug: string;
+  poster: string;
+  hoverVideo: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const handleEnter = async () => {
+    if (!videoRef.current) return;
+    videoRef.current.currentTime = 0;
+    try {
+      await videoRef.current.play();
+      setTimeout(() => {
+        videoRef.current?.pause();
+        if (videoRef.current) videoRef.current.currentTime = 0;
+      }, 2000);
+    } catch {}
+  };
+
+  const handleLeave = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0;
+  };
+
+  return (
+    <Link href={`/about/${slug}`} className="group block">
+      <article
+        className="hover-lift overflow-hidden rounded-[1.75rem] border border-white/8 bg-white/[0.03]"
+        onMouseEnter={handleEnter}
+        onMouseLeave={handleLeave}
+      >
+        <div className="relative aspect-[16/10] overflow-hidden">
+          <img src={poster} alt={title} className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+          <video
+            ref={videoRef}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-300 group-hover:opacity-100"
+            poster={poster}
+          >
+            <source src={hoverVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        </div>
+
+        <div className="space-y-3 px-4 py-5 sm:px-5">
+          <h3 className="text-lg font-medium text-white sm:text-xl">{title}</h3>
+          <div className="border-t border-white/10 pt-3 text-sm text-zinc-300">{category}</div>
+          <div className="border-t border-white/10 pt-3 text-sm text-zinc-400">{date}</div>
+        </div>
+      </article>
+    </Link>
+  );
+}
+
+export default function PortfolioGrid() {
+  return (
+    <section className="py-14 sm:py-20">
+      <Container className="space-y-10">
+        <SectionHeading
+          eyebrow="Portfolio"
+          title="Selected works and signature visual stories"
+          description="From cinematic productions to editing-led campaigns and AI-powered advertisements, each piece is crafted to feel sharp, emotional, and modern."
+        />
+
+        <div className="grid gap-8 md:grid-cols-2">
+          {works.map((work) => (
+            <WorkCard key={work.slug} {...work} />
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+```
+
+---
+
+## 15) `components/home/StatsCtaSection.tsx`
+
+```tsx
+import Link from "next/link";
+import Container from "@/components/common/Container";
+import { siteConfig } from "@/lib/data";
+
+export default function StatsCtaSection() {
+  return (
+    <section className="py-16 sm:py-24">
+      <Container>
+        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black video-shadow">
+          <video autoPlay muted loop playsInline className="aspect-[16/8] w-full object-cover opacity-45">
+            <source src="/videos/stats-loop.mp4" type="video/mp4" />
+          </video>
+
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-zinc-300">Let’s Chat</p>
+            <div className="mb-8 grid gap-6 sm:grid-cols-3">
+              {siteConfig.stats.map((item) => (
+                <div key={item.label} className="min-w-[110px]">
+                  <div className="text-2xl font-semibold text-white sm:text-4xl">{item.value}</div>
+                  <div className="mt-1 text-xs uppercase tracking-[0.24em] text-zinc-300">{item.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <Link
+              href="/contact"
+              className="rounded-xl bg-white px-6 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-black transition hover:scale-[1.03]"
+            >
+              Contact
+            </Link>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+```
+
+---
+
+## 16) `app/page.tsx`
+
+```tsx
+import Link from "next/link";
+import { Instagram, Youtube } from "lucide-react";
+import Container from "@/components/common/Container";
+import HeroSection from "@/components/home/HeroSection";
+import LogoStrip from "@/components/home/LogoStrip";
+import PortfolioGrid from "@/components/home/PortfolioGrid";
+import StatsCtaSection from "@/components/home/StatsCtaSection";
+import { siteConfig } from "@/lib/data";
+
+export default function HomePage() {
+  return (
+    <>
+      <HeroSection />
+      <LogoStrip />
+      <PortfolioGrid />
+      <StatsCtaSection />
+
+      <section className="pb-8 pt-4 sm:pb-14">
+        <Container>
+          <div className="flex items-center justify-center gap-8 text-sm text-zinc-200">
+            <a href={siteConfig.instagram} target="_blank" className="inline-flex items-center gap-2 hover:text-white">
+              <Instagram size={18} /> Instagram
+            </a>
+            <a href={siteConfig.youtube} target="_blank" className="inline-flex items-center gap-2 hover:text-white">
+              <Youtube size={18} /> YouTube
+            </a>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
+}
+```
+
+---
+
+## 17) `app/work/page.tsx`
+
+```tsx
+import Link from "next/link";
+import Container from "@/components/common/Container";
+import SectionHeading from "@/components/common/SectionHeading";
+import { works } from "@/lib/data";
+
+export default function WorkPage() {
+  return (
+    <section className="py-16 sm:py-24">
+      <Container className="space-y-12">
+        <SectionHeading
+          eyebrow="Work"
+          title="Portfolio"
+          description="From cinematic filmmaking to advanced post-production and AI-powered visuals, these projects reflect the visual language of MMBARKSTUDIO."
+        />
+
+        <div className="grid gap-8 md:grid-cols-2">
+          {works.map((work) => (
+            <Link key={work.slug} href={`/about/${work.slug}`}>
+              <article className="hover-lift overflow-hidden rounded-[1.75rem] border border-white/8 bg-white/[0.03]">
+                <div className="aspect-[16/10] overflow-hidden">
+                  <video
+                    muted
+                    loop
+                    playsInline
+                    autoPlay
+                    className="h-full w-full object-cover"
+                    poster={work.poster}
+                  >
+                    <source src={work.hoverVideo} type="video/mp4" />
+                  </video>
+                </div>
+                <div className="space-y-3 px-4 py-5 sm:px-5">
+                  <h3 className="text-lg font-medium text-white sm:text-xl">{work.title}</h3>
+                  <div className="border-t border-white/10 pt-3 text-sm text-zinc-300">{work.category}</div>
+                  <div className="border-t border-white/10 pt-3 text-sm text-zinc-400">{work.date}</div>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+```
+
+---
+
+## 18) `app/about/[slug]/page.tsx`
+
+```tsx
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Container from "@/components/common/Container";
+import SectionHeading from "@/components/common/SectionHeading";
+import { works } from "@/lib/data";
+
+export default async function WorkDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const work = works.find((item) => item.slug === slug);
+
+  if (!work) return notFound();
+
+  const moreWorks = works.filter((item) => item.slug !== slug).slice(0, 4);
+
+  return (
+    <section className="py-16 sm:py-24">
+      <Container className="space-y-12">
+        <SectionHeading
+          eyebrow={work.category}
+          title={work.title}
+          description={work.description}
+        />
+
+        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-black video-shadow">
+          {work.youtubeEmbed ? (
+            <iframe
+              src={work.youtubeEmbed}
+              title={work.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="aspect-video w-full"
+            />
+          ) : (
+            <video controls className="aspect-video w-full object-cover" poster={work.poster}>
+              <source src={work.heroVideo} type="video/mp4" />
+            </video>
+          )}
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="glass-card rounded-[1.75rem] p-6 sm:p-8">
+            <h3 className="mb-4 text-xl font-medium text-white">About this project</h3>
+            <p className="text-sm leading-7 text-zinc-300 sm:text-base">{work.description}</p>
+          </div>
+
+          <div className="glass-card rounded-[1.75rem] p-6 sm:p-8">
+            <h3 className="mb-4 text-xl font-medium text-white">Project details</h3>
+            <div className="space-y-4 text-sm text-zinc-300">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3"><span>Client</span><span>{work.client ?? "MMBARKSTUDIO"}</span></div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-3"><span>Category</span><span>{work.category}</span></div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-3"><span>Year</span><span>{work.date}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6 pt-6">
+          <h3 className="text-2xl font-medium text-white sm:text-3xl">More works</h3>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {moreWorks.map((item) => (
+              <Link key={item.slug} href={`/about/${item.slug}`} className="group overflow-hidden rounded-[1.5rem] border border-white/8 bg-white/[0.03]">
+                <img src={item.poster} alt={item.title} className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-105" />
+                <div className="p-4">
+                  <div className="text-base font-medium text-white">{item.title}</div>
+                  <div className="mt-2 text-sm text-zinc-400">{item.category}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+```
+
+---
+
+## 19) `app/contact/page.tsx`
+
+```tsx
+import { Instagram, Mail, MapPin, MessageCircle, Youtube } from "lucide-react";
+import Container from "@/components/common/Container";
+import SectionHeading from "@/components/common/SectionHeading";
+import { siteConfig } from "@/lib/data";
+
+const contactItems = [
+  {
+    label: "Instagram",
+    href: siteConfig.instagram,
+    icon: Instagram,
+  },
+  {
+    label: "WhatsApp",
+    href: siteConfig.whatsapp,
+    icon: MessageCircle,
+  },
+  {
+    label: "Gmail",
+    href: `mailto:${siteConfig.email}`,
+    icon: Mail,
+  },
+  {
+    label: "YouTube",
+    href: siteConfig.youtube,
+    icon: Youtube,
+  },
+];
+
+export default function ContactPage() {
+  return (
+    <section className="py-16 sm:py-24">
+      <Container className="space-y-12">
+        <div className="space-y-4 text-center">
+          <p className="text-xs uppercase tracking-[0.26em] text-zinc-400">Contact</p>
+          <SectionHeading title="What’s up?" description="Let’s talk about films, edits, content, campaigns, and creative collaborations." />
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="glass-card rounded-[2rem] p-6 sm:p-8">
+            <h3 className="mb-6 text-xl font-medium text-white">Connect with MMBARKSTUDIO</h3>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {contactItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-sky-200/40 hover:bg-white/[0.06]"
+                  >
+                    <div className="mb-4 inline-flex rounded-xl border border-white/10 p-3 text-sky-200">
+                      <Icon size={20} />
+                    </div>
+                    <div className="text-lg font-medium text-white">{item.label}</div>
+                    <div className="mt-1 text-sm text-zinc-400">Open {item.label}</div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="glass-card rounded-[2rem] p-6 sm:p-8">
+            <h3 className="mb-6 text-xl font-medium text-white">Address</h3>
+            <div className="space-y-6 text-sm leading-7 text-zinc-300">
+              <div className="inline-flex items-center gap-3"><MapPin size={18} /> {siteConfig.location}</div>
+              <p>{siteConfig.address.join(", ")}</p>
+              <div className="border-t border-white/10 pt-6">
+                <div className="text-sm text-zinc-400">Email</div>
+                <a href={`mailto:${siteConfig.email}`} className="mt-2 inline-block text-lg text-white">
+                  {siteConfig.email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+```
+
+---
+
+## 20) Video / Asset Guidelines for `public/`
+
+Use these file sizes and formats:
+
+### Main Hero Video
+
+* File name: `public/videos/hero-reel.mp4`
+* Resolution: **1920x1080**
+* Aspect ratio: **16:9**
+* Length: **20 to 45 seconds**
+* Format: **MP4 (H.264)**
+* Size target: **8MB to 25MB**
+* Must be muted-friendly and visually strong from first second
+
+### Popup / YouTube Main Reel
+
+* Use YouTube embed link in `HeroSection.tsx`
+* Recommended resolution: **1080p or 4K upload on YouTube**
+* Landscape format best
+
+### Work Card Hover Preview Videos
+
+* File names: `work-1-hover.mp4`, etc.
+* Resolution: **1280x720** or **960x540**
+* Length: **2 to 3 seconds**
+* Format: **MP4 (H.264)**
+* Size target: **1MB to 4MB each**
+* Must loop well and start with action immediately
+
+### Work Full Videos
+
+* File names: `work-1.mp4`, etc.
+* Resolution: **1920x1080**
+* Length: based on project
+* Size target: optimize for web, preferably **under 30MB** if self-hosted
+* For better speed, use YouTube/Vimeo embeds instead of heavy direct MP4 for final detail pages
+
+### Poster Images
+
+* File names: `work-1-poster.jpg`, etc.
+* Resolution: **1600x900** or **1920x1080**
+* Size target: **200KB to 500KB**
+* Use compressed JPG or WebP
+
+### Stats Section Loop Video
+
+* File name: `public/videos/stats-loop.mp4`
+* Resolution: **1920x1080**
+* Length: **3 to 5 seconds**
+* Must loop cleanly
+* Size target: **3MB to 8MB**
+
+---
+
+## 21) Important Notes
+
+1. Replace placeholder social links, email, WhatsApp number, YouTube embed URLs, and stats with real MMBARKSTUDIO details.
+2. Replace poster images and videos with real assets in `public/videos/`.
+3. The font used here is a close modern cinematic style. If you want the exact font feel even closer to the reference, you can later switch to a custom premium font.
+4. This setup is responsive and mobile friendly.
+5. Navbar and Footer are reusable on all pages.
+6. The `about/[slug]` page works as the single work detail page.
+
+---
+
+## 22) Final Setup Step
+
+Run:
+
+```bash
+npm run dev
+```
+
+Then open your local app and start replacing placeholder assets and links.
+
+```
+```
