@@ -18,7 +18,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-xl">
       <Container className="flex h-20 items-center justify-between">
         <Link href="/" className="font-heading text-3xl font-semibold tracking-tight text-white">
-          <span className="italic">{siteConfig.brand}</span>
+          <span>{siteConfig.brand}</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
